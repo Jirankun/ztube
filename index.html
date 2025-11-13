@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Download ZTUBE</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0a0018, #18002a, #0a0018);
+      color: #f0e6ff;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    #main-content {
+      padding: 40px 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+      background: rgba(10, 0, 25, 0.85);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(180, 109, 255, 0.6);
+    }
+
+    .header {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid rgba(160, 80, 240, 0.3);
+    }
+
+    .app-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 12px;
+      object-fit: cover;
+      border: 2px solid #b46dff;
+      box-shadow: 0 0 15px rgba(180, 109, 255, 0.8);
+    }
+
+    .app-info h1 {
+      font-size: 2rem;
+      color: #eacaff;
+      text-shadow: 0 0 10px rgba(234, 202, 255, 0.7);
+      margin-bottom: 5px;
+    }
+
+    .producer {
+      font-size: 1.1rem;
+      color: #c896ff;
+      margin-bottom: 10px;
+    }
+
+    .stats {
+      display: flex;
+      gap: 30px;
+      margin-top: 15px;
+      font-size: 0.95rem;
+      color: #d4b0ff;
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .rating {
+      color: #ffd700;
+      font-weight: bold;
+    }
+
+    .download-btn {
+      display: block;
+      width: 100%;
+      background: linear-gradient(90deg, #b46dff, #8a4fff);
+      color: white;
+      font-weight: bold;
+      padding: 16px;
+      font-size: 1.25rem;
+      border-radius: 12px;
+      text-align: center;
+      text-decoration: none;
+      margin: 25px 0;
+      box-shadow: 0 0 20px rgba(180, 109, 255, 0.8), 0 0 40px rgba(106, 48, 208, 0.5);
+      transition: all 0.3s ease;
+    }
+
+    .download-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(180, 109, 255, 1), 0 0 50px rgba(106, 48, 208, 0.7);
+    }
+
+    .section {
+      margin: 30px 0;
+      padding: 25px;
+      background: rgba(20, 0, 40, 0.4);
+      border-radius: 16px;
+      border: 1px solid rgba(160, 80, 240, 0.2);
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      color: #dab3ff;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid rgba(160, 80, 240, 0.3);
+    }
+
+    .about-text {
+      line-height: 1.7;
+      color: #f0e6ff;
+      margin-bottom: 20px;
+    }
+
+    /* Teks tambahan tersembunyi */
+    #more-text {
+      line-height: 1.7;
+      color: #f0e6ff;
+      margin-bottom: 20px;
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, opacity 0.3s ease;
+    }
+
+    #more-text.show {
+      max-height: 500px;
+      /* Sesuaikan jika teks sangat panjang */
+      opacity: 1;
+    }
+
+    .toggle-btn {
+      background: transparent;
+      border: none;
+      color: #b46dff;
+      cursor: pointer;
+      font-size: 1rem;
+      text-decoration: underline;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+
+    .toggle-btn:hover {
+      color: #d4b0ff;
+    }
+
+    .info-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(30, 0, 50, 0.3);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .info-table tr {
+      border-bottom: 1px solid rgba(160, 80, 240, 0.2);
+    }
+
+    .info-table td {
+      padding: 12px 16px;
+      font-size: 1rem;
+      color: #eae6ff;
+    }
+
+    .info-table td:first-child {
+      font-weight: bold;
+      color: #d4b0ff;
+      width: 30%;
+    }
+
+    .tag {
+      display: inline-block;
+      background: rgba(100, 30, 180, 0.5);
+      color: #e0c9ff;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      margin-right: 8px;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      color: #a884d9;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+      }
+
+      .app-icon {
+        width: 70px;
+        height: 70px;
+      }
+
+      .section {
+        padding: 20px 15px;
+      }
+
+      .info-table td {
+        padding: 10px 8px;
+        font-size: 0.95rem;
+      }
+
+      .download-btn {
+        padding: 14px;
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="main-content">
+    <div class="header">
+      <img src="https://vanced.to/assets/img/apps/thumbs/app.rvx.android.youtube.200.webp" alt="ZTUBE Icon" class="app-icon">
+      <div class="app-info">
+        <h1>ZTUBE</h1>
+        <div class="producer">Dikembangkan oleh <strong>Zhyllan Fyllah</strong></div>
+        <div class="stats">
+          <div class="stat-item"><span class="rating">⭐ 3400</span> <span>(1K Reviews)</span></div>
+          <div class="stat-item"><i class="far fa-calendar"></i> 13, November 2025</div>
+          <div class="stat-item"><i class="fas fa-user-tie"></i> Jirankun</div>
+          <div class="stat-item"><i class="fab fa-android"></i> Android 5.0+</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 16px; margin: 25px 0;"></div>
+     <a href="https://drive.google.com/uc?export=download&id=1mV6cJ4up3ZIYqoYGx9AMYsmEXMD3rYP8" download="ZTUBE_V19.apk" class="download-btn">
+       <i class="fas fa-download"></i> Download ZTUBE (Direct-165 MB)
+     </a>
+       <a href="app/MicroG_5.11 GMS-25.14.62.apk" download="MicroG_5.11 GMS-25.14.62.apk" class="download-btn">
+         <i class="fas fa-download"></i> Download Google Service (12 MB)
+       </a>
+       <a href="https://archive.newpipe.net/fdroid/repo/NewPipe_v0.28.0.apk" target="_blank"
+         rel="noopener" class="download-btn" style="background: linear-gradient(90deg, #4285f4, #3367d6);">
+         <i class="fas fa-download"></i> Download NewPipe (Direct-37 MB)
+       </a>
+    </div>
+    <div class="section">
+      <h2 class="section-title">ℹ️ Tentang Aplikasi</h2>
+      <h5 class="section-title">(MOHON DI BACA UNTUK PENGALAMAN TERBAIK ANDA)</h5>
+
+      <p class="about-text">
+        ZTUBE adalah aplikasi YouTube modifikasi, berfokus pada streaming video dan musik yang bebas iklan, pemutaran
+        video dan musik di latar belakang, dan konsumsi daya rendah. Dirancang khusus untuk pengalaman
+        menonton yang lancar tanpa gangguan, buffering berlebih, atau konsumsi data berlebihan.
+      </p>
+
+      <p class="about-text">
+        Dengan antarmuka yang intuitif dan fitur unduh offline, ZTUBE memungkinkan kamu menikmati konten favoritmu kapan
+        saja dan dimana saja.
+      </p>
+
+      <!-- Teks tambahan (tersembunyi awalnya) -->
+      <div id="more-text">
+        <p class="about-text">
+          ZTUBE juga mendukung mode hemat data, pemutaran latar belakang tanpa batas, dan kompatibel dengan berbagai
+          resolusi video hingga 1080p. Aplikasi ini tidak memerlukan root dan aman digunakan sesuai dengan kebijakan
+          penggunaan pribadi.
+        </p>
+
+        <p class="about-text">
+          Fitur unggulan lainnya termasuk: pengunduh video langsung ke internal, pemutar audio background, antarmuka bebas gangguan dan iklan,
+          dan dukungan untuk kustomisasi fitur. ZTUBE dibangun dengan prinsip privasi — tidak mengumpulkan data
+          pengguna.
+        </p>
+
+        <p class="about-text">
+          anda perlu mengintall beberapa aplikasi berikut agar ZTUBE dapat berjalan dengan baik di perangkat anda:
+        </p>
+        <ul class="about-text">
+          <li>ZTUBE APK</li>
+          <li>MicroG APK (untuk login akun Google)</li>
+          <li>NewPipe APK (sebagai alternatif dowload ke internal)</li>
+        </ul>
+
+        <p class="about-text">
+          Unduh ZTUBE sekarang dan nikmati pengalaman menonton YouTube yang lebih baik, lebih cepat, dan lebih
+          nyaman!
+        </p>
+      </div>
+
+      <!-- Tombol toggle -->
+      <button id="toggle-btn" class="toggle-btn">
+        <span id="toggle-text">Show More</span>
+        <i class="fas fa-chevron-down" id="toggle-icon"></i>
+      </button>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">📊 Informasi Tambahan</h2>
+      <table class="info-table">
+        <tr>
+          <td>Latest Version</td>
+          <td>19.47.53</td>
+        </tr>
+        <tr>
+          <td>Uploaded by</td>
+          <td>Jirankun</td>
+        </tr>
+        <tr>
+          <td>Dukungan android</td>
+          <td>Android 5.0+</td>
+        </tr>
+        <tr>
+          <td>Kategori</td>
+          <td><span class="tag">Pemutar Video</span><span class="tag">Streaming Online</span></td>
+        </tr>
+        <tr>
+          <td>Developer • Repo</td>
+          <td>Zhyllan • Jirankun</td>
+        </tr>
+        <tr>
+          <td>File Size</td>
+          <td>165 MB</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">🆕 Apa yang Baru di Versi 19.47.53</h2>
+      <p class="about-text">
+        - Penambahan fitur pemutaran latar belakang tanpa batas<br>
+        - Perbaikan bug pada downloader video<br>
+        - Optimisasi konsumsi baterai hingga 40%<br>
+        - Dukungan resolusi 4K untuk perangkat high-end<br>
+        - Antarmuka pengguna yang lebih responsif
+      </p>
+    </div>
+
+    <footer>
+      © 2025 ZTUBE — Dibuat dengan ❤️ oleh Jirankun
+    </footer>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const toggleBtn = document.getElementById('toggle-btn');
+      const moreText = document.getElementById('more-text');
+      const toggleText = document.getElementById('toggle-text');
+      const toggleIcon = document.getElementById('toggle-icon');
+
+      toggleBtn.addEventListener('click', () => {
+        if (moreText.classList.contains('show')) {
+          moreText.classList.remove('show');
+          toggleText.textContent = 'Show More';
+          toggleIcon.className = 'fas fa-chevron-down';
+        } else {
+          moreText.classList.add('show');
+          toggleText.textContent = 'Show Less';
+          toggleIcon.className = 'fas fa-chevron-up';
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>
